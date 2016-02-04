@@ -14,5 +14,6 @@
 function iewp_api_activate()
 {
 	require_once( plugin_dir_path( __FILE__ ) . 'activation/db.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'activation/user_roles.php' );
 }
 register_activation_hook( __FILE__, 'iewp_api_activate' );
