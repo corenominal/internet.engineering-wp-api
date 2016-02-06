@@ -4,8 +4,7 @@
  */
 function iewp_api_user_roles_setup()
 {
-	// Nothing to do here yet
-	return;
+	add_role( 'ie_account', 'internet.engineering Account' );
 }
 
 iewp_api_user_roles_setup();
