@@ -4,6 +4,8 @@
  */
 function ie_api_login( $request_data )
 {
+	global $wpdb;
+
 	// Capture request data
 	$request = $request_data->get_params();
 
@@ -28,11 +30,23 @@ function ie_api_login( $request_data )
     }
 
     // clean-up any existing hashes with ie_user_sessions table
+    $wpdb->delete( 'ie_users', array( 'user_id' => $user->ID ), array( '%d' ) );
 
     // create hash for user
-    $hash = uniqid();
+    $hash = uniqid('ie.', true);
 
     // insert hash into ie_user_sessions table along with userid
+	$wpdb->insert('ie_users', 
+			  array( 'user_login' => $user->user_login,
+			  		 'user_hash'  => $hash,
+			  		 'user_id'    => $user->ID
+			  ), 
+			  array( 
+			  		 '%s', 
+			  		 '%s', 
+			  		 '%d' 
+			  )
+	);
 
     // set custom user cookie
     setcookie( 'ie_account', $hash, strtotime( '+30 days' ),
