@@ -29,13 +29,13 @@ function ie_api_login( $request_data )
 		return $data;
     }
 
-    // clean-up any existing hashes with ie_user_sessions table
+    // Clean-up any existing hashes with ie_user_sessions table
     $wpdb->delete( 'ie_users', array( 'user_id' => $user->ID ), array( '%d' ) );
 
-    // create hash for user
+    // Create hash for user
     $hash = uniqid('ie.', true);
 
-    // insert hash into ie_user_sessions table along with userid
+    // Insert hash into ie_user_sessions table along with userid
 	$wpdb->insert('ie_users', 
 			  array( 'user_login' => $user->user_login,
 			  		 'user_hash'  => $hash,
@@ -48,7 +48,7 @@ function ie_api_login( $request_data )
 			  )
 	);
 
-    // set custom user cookie
+    // Set custom user cookie
     setcookie( 'ie_account', $hash, strtotime( '+30 days' ),
     '/', str_replace('https://','',get_bloginfo('url')) );
 	

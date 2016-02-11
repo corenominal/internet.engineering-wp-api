@@ -19,7 +19,20 @@ function iewp_api_activate()
 register_activation_hook( __FILE__, 'iewp_api_activate' );
 
 /**
+ * Include all helpers
+ */
+foreach ( glob( plugin_dir_path( __FILE__ ) . 'helpers/*.php' ) as $helper )
+{
+    require_once( $helper );
+}
+
+/**
  * Register REST endpoints
  */
 require_once( plugin_dir_path( __FILE__ ) . 'endpoints.php' );
 
+/**
+ * Required for Twitter App
+ */
+require_once( plugin_dir_path( __FILE__ ) . 'libraries/twitter/twitteroauth.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'twitter_app_settings.php' );

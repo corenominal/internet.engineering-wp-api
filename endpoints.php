@@ -21,20 +21,25 @@ function ie_api_register_endpoints()
         'methods' => 'GET',
         'callback' => 'ie_api_logout',
     ));
+
+    // endpoint:/wp-json/ie-api/twitter-login
+    register_rest_route( 'ie-api', '/twitter-login', array(
+        'methods' => 'GET',
+        'callback' => 'ie_api_twitter_login',
+    ));
+
+    // endpoint:/wp-json/ie-api/twitter-callback
+    register_rest_route( 'ie-api', '/twitter-callback', array(
+        'methods' => 'GET',
+        'callback' => 'ie_api_twitter_callback',
+    ));
 }
 add_action( 'rest_api_init', 'ie_api_register_endpoints' );
 
 /**
- * Endpoint to check role capabilities
+ * Include all endpoints
  */
-require_once( plugin_dir_path( __FILE__ ) . 'endpoints/get_role.php' );
-
-/**
- * Endpoint for user login
- */
-require_once( plugin_dir_path( __FILE__ ) . 'endpoints/login.php' );
-
-/**
- * Endpoint for user logout
- */
-require_once( plugin_dir_path( __FILE__ ) . 'endpoints/logout.php' );
+foreach ( glob( plugin_dir_path( __FILE__ ) . 'endpoints/*.php' ) as $endpoint )
+{
+    require_once( $endpoint );
+}
