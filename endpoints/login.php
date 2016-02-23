@@ -53,6 +53,7 @@ function ie_api_login( $request_data )
     '/', str_replace('https://','',get_bloginfo('url')) );
 	
 	$data['user'] = $user;
+	$data['redirect'] = site_url( 'welcome' );
 	return $data;
 
 }
