@@ -16,6 +16,20 @@ function ie_api_login( $request_data )
 		return $data;
 	}
 
+	// Test for nonce
+	if( !isset( $request['foo'] ) )
+	{
+		$data['error'] = 'Invalid referrer. Please try again.';
+		return $data;
+	}
+
+	// Test nonce is valid
+	if( !wp_verify_nonce( $request['foo'], 'user-login' ) )
+	{
+		$data['error'] = 'Invalid referrer. Please try again.';
+		return $data;
+	}
+
 	$credentials = array(
 		'user_login'    => $request['user_login'],
         'user_password' => $request['user_password'],
