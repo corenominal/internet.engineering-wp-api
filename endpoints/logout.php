@@ -12,6 +12,7 @@ function ie_api_logout()
 	wp_logout();
 	
 	// return something
+	$data['redirect'] = site_url();
 	$data['logout'] = true;
 	return $data;
 }
